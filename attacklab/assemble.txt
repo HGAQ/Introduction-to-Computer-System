@@ -1,0 +1,10 @@
+
+assemble.o:     file format elf64-x86-64
+
+
+Disassembly of section .text:
+
+0000000000000000 <.text>:
+   0:	48 c7 c7 cf f9 2e 79 	mov    $0x792ef9cf,%rdi
+   7:	68 7a 20 40 00       	push   $0x40207a
+   c:	c3                   	ret    

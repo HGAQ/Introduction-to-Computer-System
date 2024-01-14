@@ -1,0 +1,262 @@
+#######################################################################
+# Test for copying block of size 4;
+#######################################################################
+	.pos 0
+main:	irmovq Stack, %rsp  	# Set up stack pointer
+
+	# Set up arguments for copy function and then invoke it
+	irmovq $4, %rdx		# src and dst have 4 elements
+	irmovq dest, %rsi	# dst array
+	irmovq src, %rdi	# src array
+	call ncopy		 
+	halt			# should halt with num nonzeros in %rax
+StartFun:
+#/* $begin ncopy-ys */
+##################################################################
+# ncopy.ys - Copy a src block of len words to dst.
+# Return the number of positive words (>0) contained in src.
+#
+# Include your name and ID here.
+# 刘松瑞 2100011819
+# Describe how and why you modified the baseline code.
+# 1. 使用iaddq代替addq，避免多余的内存引用
+# 2.
+#
+#
+#
+#
+##################################################################
+# Do not modify this portion
+# Function prologue.
+# %rdi = src, %rsi = dst, %rdx = len
+ncopy:
+
+##################################################################
+# You can modify this portion
+	# Loop header
+	# irmovq $1, %rcx
+	# irmovq $8, %r8
+	# xorq %rax,%rax		# count = 0;
+	iaddq $-10, %rdx		# len -	10
+	andq %rdx,%rdx		# len <= 10?
+	jle Rest			# goto rest
+Round1:	
+	mrmovq (%rdi), %r10		# read val from src...
+	mrmovq 8(%rdi), %r11
+	rmmovq %r10, (%rsi)		# ...and store it to dst
+	andq %r10, %r10			# val <= 0....
+	jle Round2
+	iaddq $1, %rax		# ...count++
+Round2:
+	rmmovq %r11, 8(%rsi)	# ...and store it to dst
+	mrmovq 16(%rdi), %r10
+	andq %r11, %r11			# val <= 0....
+	jle Round3
+	iaddq $1, %rax		# ...count++
+Round3:
+	rmmovq %r10, 16(%rsi)	# ...and store it to dst
+	mrmovq 24(%rdi), %r11
+	andq %r10, %r10			# val <= 0....
+	jle Round4
+	iaddq $1, %rax		# ...count++
+Round4:
+	rmmovq %r11, 24(%rsi)	# ...and store it to dst
+	mrmovq 32(%rdi), %r10
+	andq %r11, %r11			# val <= 0....
+	jle Round5
+	iaddq $1, %rax		# ...count++
+Round5:
+	rmmovq %r10, 32(%rsi)	# ...and store it to dst
+	mrmovq 40(%rdi), %r11
+	andq %r10, %r10			# val <= 0....
+	jle Round6
+	iaddq $1, %rax		# ...count++
+Round6:
+	rmmovq %r11, 40(%rsi)	# ...and store it to dst
+	mrmovq 48(%rdi), %r10
+	andq %r11, %r11			# val <= 0....
+	jle Round7
+	iaddq $1, %rax		# ...count++
+Round7:
+	rmmovq %r10, 48(%rsi)	# ...and store it to dst
+	mrmovq 56(%rdi), %r11
+	andq %r10, %r10			# val <= 0....
+	jle Round8
+	iaddq $1, %rax		# ...count++
+Round8:
+	rmmovq %r11, 56(%rsi)	# ...and store it to dst
+	mrmovq 64(%rdi), %r10
+	andq %r11, %r11			# val <= 0....
+	jle Round9
+	iaddq $1, %rax		# ...count++
+Round9:
+	rmmovq %r10, 64(%rsi)	# ...and store it to dst
+	mrmovq 72(%rdi), %r11
+	andq %r10, %r10			# val <= 0....
+	jle Round10
+	iaddq $1, %rax		# ...count++
+Round10:
+	rmmovq %r11, 72(%rsi)	# ...and store it to dst
+	andq %r11, %r11			# val <= 0....
+	jle Npos
+	iaddq $1, %rax		# ...count++
+Npos:	
+	iaddq $-10, %rdx		# len--
+	iaddq $80, %rdi		# src++
+	iaddq $80, %rsi		# dst++
+	andq %rdx, %rdx		# len > 0?
+	jg Round1			# if so, goto Round1:
+
+Rest: 
+	iaddq $7, %rdx
+	jg Big 				#	len - 3 > 0 
+	jl Small 			#	len - 3 < 0
+	je Loop3			#	len == 3
+Small:
+	iaddq $2, %rdx		#	len - 1  
+	je Loop1			#	len == 1
+	iaddq $-1, %rdx
+	je Loop2 			# 	len == 2
+	jmp Done				#   len == 0
+Big:
+	iaddq $-4, %rdx		#	len - 7 ? 
+	je Loop7 			# 	len == 7
+	jg Bigbig           #   len == 8,9,10
+Bigsmall:
+	iaddq $1, %rdx 		# 	len - 5
+	jl Loop4			#   len == 4
+	je Loop5			#	len == 5
+	iaddq $-1, %rdx 		# 	len - 6
+	je Loop6			#	len == 6
+Bigbig:
+	iaddq $-2, %rdx 	# 	len - 9
+	jl Loop8			#	len == 8
+	je Loop9			#	len == 9
+
+
+
+Loop10:
+	mrmovq 72(%rdi), %r10
+	rmmovq %r10, 72(%rsi)
+	andq %r10,%r10
+Loop9:
+	mrmovq 64(%rdi), %r10
+	jle Loop9_
+	iaddq $1, %rax		# ...count++
+Loop9_:
+	rmmovq %r10, 64(%rsi)
+	andq %r10,%r10
+Loop8:
+	mrmovq 56(%rdi), %r10
+	jle Loop8_
+	iaddq $1, %rax		# ...count++
+Loop8_:
+	rmmovq %r10, 56(%rsi)
+	andq %r10,%r10
+Loop7:
+	mrmovq 48(%rdi), %r10
+	jle Loop7_
+	iaddq $1, %rax		# ...count++
+Loop7_:
+	rmmovq %r10, 48(%rsi)
+	andq %r10,%r10
+Loop6:
+	mrmovq 40(%rdi), %r10
+	jle Loop6_
+	iaddq $1, %rax		# ...count++
+Loop6_:
+	rmmovq %r10, 40(%rsi)
+	andq %r10,%r10
+Loop5:
+	mrmovq 32(%rdi), %r10
+	jle Loop5_
+	iaddq $1, %rax		# ...count++
+Loop5_:
+	rmmovq %r10, 32(%rsi)
+	andq %r10,%r10
+Loop4:
+	mrmovq 24(%rdi), %r10
+	jle Loop4_
+	iaddq $1, %rax		# ...count++
+Loop4_:
+	rmmovq %r10, 24(%rsi)
+	andq %r10,%r10
+Loop3:
+	mrmovq 16(%rdi), %r10
+	jle Loop3_
+	iaddq $1, %rax		# ...count++
+Loop3_:
+	rmmovq %r10, 16(%rsi)
+	andq %r10,%r10
+Loop2:
+	mrmovq 8(%rdi), %r10
+	jle Loop2_
+	iaddq $1, %rax		# ...count++
+Loop2_:
+	rmmovq %r10, 8(%rsi)
+	andq %r10,%r10
+Loop1:
+	mrmovq (%rdi), %r10
+	jle Loop1_
+	iaddq $1, %rax		# ...count++
+Loop1_:
+	rmmovq %r10, (%rsi)
+	andq %r10,%r10
+	jle Done
+	#iaddq $1, %rax		# ...count++
+
+
+	
+##################################################################
+# Do not modify the following section of code
+# Function epilogue.
+Done:
+	ret
+##################################################################
+# Keep the following label at the end of your function
+End:
+#/* $end ncopy-ys */
+EndFun:
+
+###############################
+# Source and destination blocks 
+###############################
+	.align 8
+src:
+	.quad -1
+	.quad -2
+	.quad 3
+	.quad 4
+	.quad 0xbcdefa # This shouldn't get moved
+
+	.align 16
+Predest:
+	.quad 0xbcdefa
+dest:
+	.quad 0xcdefab
+	.quad 0xcdefab
+	.quad 0xcdefab
+	.quad 0xcdefab
+Postdest:
+	.quad 0xdefabc
+
+.align 8
+# Run time stack
+	.quad 0
+	.quad 0
+	.quad 0
+	.quad 0
+	.quad 0
+	.quad 0
+	.quad 0
+	.quad 0
+	.quad 0
+	.quad 0
+	.quad 0
+	.quad 0
+	.quad 0
+	.quad 0
+	.quad 0
+	.quad 0
+
+Stack:

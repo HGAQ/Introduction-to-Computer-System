@@ -1,0 +1,94 @@
+0x0000561f7ef50962 <+0>:     endbr64 
+0x0000561f7ef50966 <+4>:     sub    $0x18,%rsp
+0x0000561f7ef5096a <+8>:     mov    %fs:0x28,%rax
+0x0000561f7ef50973 <+17>:    mov    %rax,0x8(%rsp)
+0x0000561f7ef50978 <+22>:    xor    %eax,%eax
+0x0000561f7ef5097a <+24>:    lea    0x4(%rsp),%rcx
+0x0000561f7ef5097f <+29>:    mov    %rsp,%rdx
+0x0000561f7ef50982 <+32>:    lea    0x2de9(%rip),%rsi        # 0x561f7ef53772 two number
+0x0000561f7ef50989 <+39>:    call   0x561f7ef50350 <__isoc99_sscanf@plt>
+0x0000561f7ef5098e <+44>:    cmp    $0x2,%eax
+0x0000561f7ef50991 <+47>:    jne    0x561f7ef5099f <phase_4+61><explode_bomb>
+if input is safe
+(%rsp) = 1st arg
+0x0000561f7ef50993 <+49>:    mov    (%rsp),%eax
+0x0000561f7ef50996 <+52>:    test   %eax,%eax
+%eax & %eax 
+0x0000561f7ef50998 <+54>:    js     0x561f7ef5099f <phase_4+61><explode_bomb>
+%eax >=0;
+0x0000561f7ef5099a <+56>:    cmp    $0xe,%eax
+%eax <= 0xe
+0x0000561f7ef5099d <+59>:    jle    0x561f7ef509a4 <phase_4+66>
+0x0000561f7ef5099f <+61>:    call   0x561f7ef5108c <explode_bomb>
+
+
+0x0000561f7ef509a4 <+66>:    mov    $0xe,%edx
+0x0000561f7ef509a9 <+71>:    mov    $0x0,%esi
+0x0000561f7ef509ae <+76>:    mov    (%rsp),%edi
+
+%edx %esi %edi
+0xe  0x0  (%rsp) 
+
+0x0000561f7ef509b1 <+79>:    call   0x561f7ef50921 <func4>
+
+%edx %esi %edi   %eax
+0xe  0x0  (%rsp) 0
+
+
+0x0000561f7ef509b6 <+84>:    test   %eax,%eax
+0x0000561f7ef509b8 <+86>:    jne    0x561f7ef509c1 <phase_4+95><explode_bomb>
+0x0000561f7ef509ba <+88>:    cmpl   $0x0,0x4(%rsp)
+2nd =0;
+0x0000561f7ef509bf <+93>:    je     0x561f7ef509c6 <phase_4+100>
+0x0000561f7ef509c1 <+95>:    call   0x561f7ef5108c <explode_bomb>
+
+0x0000561f7ef509c6 <+100>:   mov    0x8(%rsp),%rax
+0x0000561f7ef509cb <+105>:   xor    %fs:0x28,%rax
+0x0000561f7ef509d4 <+114>:   jne    0x561f7ef509db <phase_4+121>
+0x0000561f7ef509d6 <+116>:   add    $0x18,%rsp
+0x0000561f7ef509da <+120>:   ret    
+0x0000561f7ef509db <+121>:   call   0x561f7ef50290 <__stack_chk_fail@plt>
+
+
+
+
+
+
+
+%edx %esi %edi
+0xe  0x0  (%rsp) 
+
+%edx %esi %edi %ecx %eax 
+0xe  0x0  arg  0xe  0xe
+
+   0x0000561f7ef50921 <+0>:     endbr64 
+   0x0000561f7ef50925 <+4>:     sub    $0x8,%rsp
+   0x0000561f7ef50929 <+8>:     mov    %edx,%ecx
+   0x0000561f7ef5092b <+10>:    sub    %esi,%ecx
+   ecx = edx - esi 0xe
+   0x0000561f7ef5092d <+12>:    mov    %ecx,%eax
+   0x0000561f7ef5092f <+14>:    shr    $0x1f,%eax
+   0x0000561f7ef50932 <+17>:    add    %ecx,%eax
+   0x0000561f7ef50934 <+19>:    sar    %eax
+   0x0000561f7ef50936 <+21>:    add    %esi,%eax
+   eax = ((ecx >>h 31 + ecx) >>a 1) + esi 
+   0x7
+   0x0000561f7ef50938 <+23>:    cmp    %edi,%eax
+   %eax > edi
+   0x0000561f7ef5093a <+25>:    jg     0x561f7ef50948 <func4+39>
+        0x0000561f7ef50948 <+39>:    lea    -0x1(%rax),%edx
+        edx = rax - 1
+        0x0000561f7ef5094b <+42>:    call   0x561f7ef50921 <func4>
+   0x0000561f7ef5093c <+27>:    jl     0x561f7ef50954 <func4+51>
+        0x0000561f7ef50954 <+51>:    lea    0x1(%rax),%esi
+        esi = rax + 1
+        0x0000561f7ef50957 <+54>:    call   0x561f7ef50921 <func4>
+   0x0000561f7ef5093e <+29>:    mov    $0x0,%eax
+   0x0000561f7ef50943 <+34>:    add    $0x8,%rsp
+   0x0000561f7ef50947 <+38>:    ret    
+
+   0x0000561f7ef50950 <+47>:    add    %eax,%eax
+   0x0000561f7ef50952 <+49>:    jmp    0x561f7ef50943 <func4+34>
+
+   0x0000561f7ef5095c <+59>:    lea    0x1(%rax,%rax,1),%eax
+   0x0000561f7ef50960 <+63>:    jmp    0x561f7ef50943 <func4+34>

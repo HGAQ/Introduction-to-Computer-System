@@ -1,0 +1,49 @@
+#刘松瑞 2100011819
+#/* rsum_list - Recursive version of sum_list */
+    .pos 0
+    irmovq stack,%rsp
+    call main
+    halt
+
+# Sample linked list
+    .align 8
+ele1:
+    .quad 0x00a
+    .quad ele2
+ele2:
+    .quad 0x0b0
+    .quad ele3
+ele3:
+    .quad 0xc00
+    .quad 0
+main:
+    irmovq ele1,%rdi 
+    call rsum_list
+    ret
+# ls in %rdi
+#long rsum_list(list_ptr ls)
+#{
+#    if (!ls)
+#	return 0;
+#    else {
+#	long val = ls->val;
+#	long rest = rsum_list(ls->next);
+#	return val + rest;
+#    }
+#}
+#
+rsum_list:
+    xorq %rax,%rax
+    andq %rdi,%rdi
+    je test
+    pushq %rbx
+    mrmovq (%rdi),%rbx
+    mrmovq 8(%rdi),%rdi
+    call rsum_list
+    addq %rbx,%rax
+    popq %rbx
+test:
+    ret
+
+    .pos 0x200
+stack:

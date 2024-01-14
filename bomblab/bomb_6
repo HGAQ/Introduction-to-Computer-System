@@ -1,0 +1,151 @@
+0x0000562a4656fa73 <+0>:     endbr64 
+0x0000562a4656fa77 <+4>:     push   %r12
+0x0000562a4656fa79 <+6>:     push   %rbp
+0x0000562a4656fa7a <+7>:     push   %rbx
+0x0000562a4656fa7b <+8>:     sub    $0x60,%rsp
+0x0000562a4656fa7f <+12>:    mov    %fs:0x28,%rax
+
+
+0x0000562a4656fa88 <+21>:    mov    %rax,0x58(%rsp)
+0x0000562a4656fa8d <+26>:    xor    %eax,%eax
+0x0000562a4656fa8f <+28>:    mov    %rsp,%rsi
+0x0000562a4656fa92 <+31>:    call   0x562a46570112 <read_six_numbers>
+0x0000562a4656fa97 <+36>:    mov    $0x0,%ebp
+0x0000562a4656fa9c <+41>:    jmp    0x562a4656fac5 <phase_6+82>
+0x0000562a4656fa9e <+43>:    call   0x562a4657008c <explode_bomb>
+
+input 6 read_six_numbers
+
+
+0x0000562a4656faa3 <+48>:    jmp    0x562a4656fad8 <phase_6+101>
+0x0000562a4656faa5 <+50>:    add    $0x1,%ebx
+0x0000562a4656faa8 <+53>:    cmp    $0x5,%ebx = 1
+0x0000562a4656faab <+56>:    jg     0x562a4656fac2 <phase_6+79>
+0x0000562a4656faad <+58>:    movslq %ebp,%rax
+0x0000562a4656fab0 <+61>:    movslq %ebx,%rdx
+0x0000562a4656fab3 <+64>:    mov    (%rsp,%rdx,4),%edi 
+0x0000562a4656fab6 <+67>:    cmp    %edi,(%rsp,%rax,4)
+0x0000562a4656fab9 <+70>:    jne    0x562a4656faa5 <phase_6+50>
+0x0000562a4656fabb <+72>:    call   0x562a4657008c <explode_bomb>
+0x0000562a4656fac0 <+77>:    jmp    0x562a4656faa5 <phase_6+50>
+0x0000562a4656fac2 <+79>:    mov    %r12d,%ebp 
+
+0x0000562a4656fac5 <+82>:    cmp    $0x5,%ebp = 0  
+0x0000562a4656fac8 <+85>:    jg     0x562a4656fae1 <phase_6+110>
+0x0000562a4656faca <+87>:    movslq %ebp,%rax
+0x0000562a4656facd <+90>:    mov    (%rsp,%rax,4),%eax = x0
+0x0000562a4656fad0 <+93>:    sub    $0x1,%eax
+0x0000562a4656fad3 <+96>:    cmp    $0x5,%eax is between 1 to 6
+0x0000562a4656fad6 <+99>:    ja     0x562a4656fa9e <phase_6+43><explode_bomb>
+0x0000562a4656fad8 <+101>:   lea    0x1(%rbp),%r12d=1
+0x0000562a4656fadc <+105>:   mov    %r12d,%ebx = 1
+0x0000562a4656fadf <+108>:   jmp    0x562a4656faa8 <phase_6+53>
+
+nums is between 1 to 6, not equal
+
+
+
+
+
+0x0000562a4656fae1 <+110>:   mov    $0x0,%esi                   # %esi = 0
+0x0000562a4656fae6 <+115>:   jmp    0x562a4656faf0 <phase_6+125>
+
+0x0000562a4656fae8 <+117>:   mov    %rdx,0x20(%rsp,%rcx,8)      #  (8*%rcx + 20 + rsp) = %rdx
+0x0000562a4656faed <+122>:   add    $0x1,%esi
+
+
+0x0000562a4656faf0 <+125>:   cmp    $0x5,%esi                   # if esi <= 5
+0x0000562a4656faf3 <+128>:   jg     0x562a4656fb12 <phase_6+159>     ↓
+0x0000562a4656faf5 <+130>:   mov    $0x1,%eax                   # eax = 1
+0x0000562a4656fafa <+135>:   lea    0x672f(%rip),%rdx        # 0x556eb2d8d230 <node1>  # %rdx = &node1
+0x0000562a4656fb01 <+142>:   movslq %esi,%rcx                   # rcx = esi = *0*
+0x0000562a4656fb04 <+145>:   cmp    %eax,(%rsp,%rcx,4)          # x*0* <= eax = 1  x*0* > eax = 1
+0x0000562a4656fb07 <+148>:   jle    0x562a4656fae8 <phase_6+117>       ↑            ↓
+
+0x0000562a4656fb09 <+150>:   mov    0x8(%rdx),%rdx              # %rdx = &node2
+0x0000562a4656fb0d <+154>:   add    $0x1,%eax                   # eax +=1
+0x0000562a4656fb10 <+157>:   jmp    0x562a4656fb01 <phase_6+142>
+
+&node x0      &node x1       &node x2        &node x3      &node x4       &node x5   
+
+rsp+20         rsp+28         ......
+    ↓             ↓              ↓               ↓             ↓              ↓
+    |-&node x1|   |-&node x2|    |-&node x3|     |-&node x4|   |-&node x5|    |-orig| 
+
+
+
+
+0x0000562a4656fb12 <+159>:   mov    0x20(%rsp),%rbx             # rbx = rcx = &node x0
+0x0000562a4656fb17 <+164>:   mov    %rbx,%rcx     
+0x0000562a4656fb1a <+167>:   mov    $0x1,%eax                   # rax = 1
+0x0000562a4656fb1f <+172>:   jmp    0x562a4656fb33 <phase_6+192>
+
+0x0000562a4656fb21 <+174>:   movslq %eax,%rdx                   # rdx = rax = 1
+0x0000562a4656fb24 <+177>:   mov    0x20(%rsp,%rdx,8),%rdx      # rdx = &nodex1
+0x0000562a4656fb29 <+182>:   mov    %rdx,0x8(%rcx)              # &nodex1 = &nodex0->next;
+0x0000562a4656fb2d <+186>:   add    $0x1,%eax                   # eax+=1
+0x0000562a4656fb30 <+189>:   mov    %rdx,%rcx
+
+0x0000562a4656fb33 <+192>:   cmp    $0x5,%eax
+0x0000562a4656fb36 <+195>:   jle    0x562a4656fb21 <phase_6+174># rax <= 5   ↑
+
+&node x0      &node x1       &node x2        &node x3      &node x4       &node x5   
+
+rsp+20         rsp+28         ......
+    ↓             ↓              ↓               ↓             ↓              ↓
+    |-&node x1|   |-&node x2|    |-&node x3|     |-&node x4|   |-&node x5|    |-orig| 
+                                                                rcx            rdx
+rbx
+0x0000562a4656fb38 <+197>:   movq   $0x0,0x8(%rcx)                  # rcx = &node x5 , 
+0x0000562a4656fb40 <+205>:   mov    $0x0,%ebp                       # ebp = 0
+0x0000562a4656fb45 <+210>:   jmp    0x562a4656fb4e <phase_6+219>    
+0x0000562a4656fb47 <+212>:   mov    0x8(%rbx),%rbx
+0x0000562a4656fb4b <+216>:   add    $0x1,%ebp
+
+0x0000562a4656fb4e <+219>:   cmp    $0x4,%ebp                       # ebp <= 4
+0x0000562a4656fb51 <+222>:   jg     0x562a4656fb64 <phase_6+241>
+0x0000562a4656fb53 <+224>:   mov    0x8(%rbx),%rax                  # rax = &nodex1
+0x0000562a4656fb57 <+228>:   mov    (%rax),%eax                     # eax = *(&nodex1) 0x1
+0x0000562a4656fb59 <+230>:   cmp    %eax,(%rbx)                     # *(&nodex0) >= *(&nodex1)
+0x0000562a4656fb5b <+232>:   jge    0x562a4656fb47 <phase_6+212>
+0x0000562a4656fb5d <+234>:   call   0x562a4657008c <explode_bomb>
+0x0000562a4656fb62 <+239>:   jmp    0x562a4656fb47 <phase_6+212>
+
+
+
+&node x0      &node x1       &node x2        &node x3      &node x4       &node x5   
+
+rsp+20         rsp+28         ......
+    ↓             ↓              ↓               ↓             ↓              ↓
+    |-&node x1|   |-&node x2|    |-&node x3|     |-&node x4|   |-&node x5|    |-0| 
+                                                                                rcx rdx
+rbx
+
+    5            4              6            1               3                2
+
+
+0x556e24147230 <node1>: 0x0000000100000204      0x0000556e24147240    & node2
+0x556e24147240 <node2>: 0x00000002000000bf      0x0000556e24147250
+0x556e24147250 <node3>: 0x00000003000000e1      0x0000556e24147260
+0x556e24147260 <node4>: 0x00000004000002dc      0x0000556e24147270
+0x556e24147270 <node5>: 0x0000000500000335      0x0000556e24146120
+0x556e24146120 <node6>: 0x0000000600000264      0x0000000000000000
+
+
+
+
+
+
+
+
+
+
+0x0000562a4656fb64 <+241>:   mov    0x58(%rsp),%rax
+0x0000562a4656fb69 <+246>:   xor    %fs:0x28,%rax
+0x0000562a4656fb72 <+255>:   jne    0x562a4656fb7d <phase_6+266>
+0x0000562a4656fb74 <+257>:   add    $0x60,%rsp
+0x0000562a4656fb78 <+261>:   pop    %rbx
+0x0000562a4656fb79 <+262>:   pop    %rbp
+0x0000562a4656fb7a <+263>:   pop    %r12
+0x0000562a4656fb7c <+265>:   ret    
+0x0000562a4656fb7d <+266>:   call   0x562a4656f290 <__stack_chk_fail@plt>

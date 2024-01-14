@@ -1,0 +1,82 @@
+   0x000055eb2159abc3 <+0>:     endbr64 
+   0x000055eb2159abc7 <+4>:     push   %rbx
+   0x000055eb2159abc8 <+5>:     sub    $0x10,%rsp
+   0x000055eb2159abcc <+9>:     mov    %fs:0x28,%rax
+   0x000055eb2159abd5 <+18>:    mov    %rax,0x8(%rsp)
+   0x000055eb2159abda <+23>:    xor    %eax,%eax
+   0x000055eb2159abdc <+25>:    call   0x55eb2159b157 <read_line>
+   0x000055eb2159abe1 <+30>:    mov    %rax,%rdi
+   0x000055eb2159abe4 <+33>:    mov    $0xa,%edx
+   0x000055eb2159abe9 <+38>:    mov    $0x0,%esi
+   0x000055eb2159abee <+43>:    call   0x55eb2159a310 <strtol@plt>
+
+   0x000055eb2159abf3 <+48>:    mov    %rax,%rbx
+   0x000055eb2159abf6 <+51>:    lea    -0x1(%rax),%eax
+   0x000055eb2159abf9 <+54>:    cmp    $0x3e8,%eax<
+
+   0x000055eb2159abfe <+59>:    ja     0x55eb2159ac6f <secret_phase+172><explode_bomb>
+   0x000055eb2159ac00 <+61>:    mov    %ebx,%esi
+   0x000055eb2159ac02 <+63>:    lea    0x6547(%rip),%rdi        # 0x55eb215a1150 <n1> 36
+
+   0x000055eb2159ac09 <+70>:    call   0x55eb2159ab82 <fun7>
+
+            0x000055eb2159ab82 <+0>:     endbr64 
+            0x000055eb2159ab86 <+4>:     test   %rdi,%rdi
+            0x000055eb2159ab89 <+7>:     je     0x55eb2159abbd <fun7+59>
+            0x000055eb2159ab8b <+9>:     sub    $0x8,%rsp
+            0x000055eb2159ab8f <+13>:    mov    (%rdi),%eax 0x24
+            0x000055eb2159ab91 <+15>:    cmp    %esi,%eax vs36??
+
+            0x000055eb2159ab93 <+17>:    jg     0x55eb2159aba1 <fun7+31>
+            0x000055eb2159ab95 <+19>:    jne    0x55eb2159abae <fun7+44>
+            =
+            0x000055eb2159ab97 <+21>:    mov    $0x0,%eax
+            0x000055eb2159ab9c <+26>:    add    $0x8,%rsp
+            0x000055eb2159aba0 <+30>:    ret   #rax=5 
+            >
+            0x000055eb2159aba1 <+31>:    mov    0x8(%rdi),%rdi +8
+            0x000055eb2159aba5 <+35>:    call   0x55eb2159ab82 <fun7>
+
+            0x000055eb2159abaa <+40>:    add    %eax,%eax # rax = 1
+            0x000055eb2159abac <+42>:    jmp    0x55eb2159ab9c <fun7+26>
+            <
+            0x000055eb2159abae <+44>:    mov    0x10(%rdi),%rdi +10
+            0x000055eb2159abb2 <+48>:    call   0x55eb2159ab82 <fun7> #rax = 2
+%rax+%rax+1
+            0x000055eb2159abb7 <+53>:    lea    0x1(%rax,%rax,1),%eax 
+            0x000055eb2159abbb <+57>:    jmp    0x55eb2159ab9c <fun7+26>
+
+            0x000055eb2159abbd <+59>:    mov    $0xffffffff,%eax
+            0x000055eb2159abc2 <+64>:    ret   
+
+   0x000055eb2159ac0e <+75>:    cmp    $0x5,%eax
+
+
+
+
+
+   0x000055eb2159ac11 <+78>:    jne    0x55eb2159ac76 <secret_phase+179><explode_bomb>
+   0x000055eb2159ac13 <+80>:    lea    0x2616(%rip),%rdi        # 0x55eb2159d230
+   0x000055eb2159ac1a <+87>:    call   0x55eb2159a270 <puts@plt>
+   0x000055eb2159ac1f <+92>:    lea    0x265a(%rip),%rdi        # 0x55eb2159d280
+   0x000055eb2159ac26 <+99>:    call   0x55eb2159a270 <puts@plt>
+   0x000055eb2159ac2b <+104>:   lea    0x2696(%rip),%rdi        # 0x55eb2159d2c8
+   0x000055eb2159ac32 <+111>:   call   0x55eb2159a270 <puts@plt>
+   0x000055eb2159ac37 <+116>:   lea    0x26c2(%rip),%rdi        # 0x55eb2159d300
+   0x000055eb2159ac3e <+123>:   call   0x55eb2159a270 <puts@plt>
+   0x000055eb2159ac43 <+128>:   lea    0x2726(%rip),%rdi        # 0x55eb2159d370
+   0x000055eb2159ac4a <+135>:   call   0x55eb2159a270 <puts@plt>
+   0x000055eb2159ac4f <+140>:   lea    0x4(%rsp),%rdi
+--Type <RET> for more, q to quit, c to continue without paging--r
+   0x000055eb2159ac54 <+145>:   call   0x55eb2159b2a2 <phase_defused>
+   0x000055eb2159ac59 <+150>:   mov    0x8(%rsp),%rax
+   0x000055eb2159ac5e <+155>:   xor    %fs:0x28,%rax
+   0x000055eb2159ac67 <+164>:   jne    0x55eb2159ac7d <secret_phase+186>
+   0x000055eb2159ac69 <+166>:   add    $0x10,%rsp
+   0x000055eb2159ac6d <+170>:   pop    %rbx
+   0x000055eb2159ac6e <+171>:   ret    
+   0x000055eb2159ac6f <+172>:   call   0x55eb2159b08c <explode_bomb>
+   0x000055eb2159ac74 <+177>:   jmp    0x55eb2159ac00 <secret_phase+61>
+   0x000055eb2159ac76 <+179>:   call   0x55eb2159b08c <explode_bomb>
+   0x000055eb2159ac7b <+184>:   jmp    0x55eb2159ac13 <secret_phase+80>
+   0x000055eb2159ac7d <+186>:   call   0x55eb2159a290 <__stack_chk_fail@plt>

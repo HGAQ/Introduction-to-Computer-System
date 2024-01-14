@@ -1,0 +1,66 @@
+0x00005593c177a9e0 <+0>:     endbr64 
+0x00005593c177a9e4 <+4>:     sub    $0x18,%rsp
+0x00005593c177a9e8 <+8>:     mov    %fs:0x28,%rax
+0x00005593c177a9f1 <+17>:    mov    %rax,0x8(%rsp)
+0x00005593c177a9f6 <+22>:    xor    %eax,%eax
+0x00005593c177a9f8 <+24>:    lea    0x4(%rsp),%rcx
+0x00005593c177a9fd <+29>:    mov    %rsp,%rdx
+0x00005593c177aa00 <+32>:    lea    0x2d6b(%rip),%rsi        # 0x5593c177d772
+"%d %d"
+0x00005593c177aa07 <+39>:    call   0x5593c177a350 <__isoc99_sscanf@plt>
+0x00005593c177aa0c <+44>:    cmp    $0x1,%eax
+0x00005593c177aa0f <+47>:    jle    0x5593c177aa42 <phase_5+98> <explode_bomb>
+
+0x00005593c177aa11 <+49>:    mov    (%rsp),%eax
+(%rsp) == %eax
+0x00005593c177aa14 <+52>:    and    $0xf,%eax
+0x00005593c177aa17 <+55>:    mov    %eax,(%rsp)
+
+0x00005593c177aa1a <+58>:    mov    $0x0,%ecx
+0x00005593c177aa1f <+63>:    mov    $0x0,%edx
+
+
+0x00005593c177aa24 <+68>:    mov    (%rsp),%eax
+0x00005593c177aa27 <+71>:    cmp    $0xf,%eax
+(%rsp)  %eax  %ecx %edx 
+  $0xf&(%rsp)  0    0  
+0x00005593c177aa2a <+74>:    je     0x5593c177aa49 <phase_5+105>
+0x00005593c177aa2c <+76>:    add    $0x1,%edx
+%edx += 1
+0x00005593c177aa2f <+79>:    cltq   
+0x00005593c177aa31 <+81>:    lea    0x29a8(%rip),%rsi        # 0x5593c177d3e0 <array.3497>
+
+0x55793ecbd3e0 <array.3497>:    .10      .2       .14      .7
+0x55793ecbd3f0 <array.3497+16>: .8       .12      .15      .11
+0x55793ecbd400 <array.3497+32>: .0       .4       .1       .13
+0x55793ecbd410 <array.3497+48>: .3       .9       .6       .5
+
+0x00005593c177aa38 <+88>:    mov    (%rsi,%rax,4),%eax
+%eax  = (%rsp) = (%rsi + 4 * %rax) 
+0x00005593c177aa3b <+91>:    mov    %eax,(%rsp)
+0x00005593c177aa3e <+94>:    add    %eax,%ecx
+
+0x00005593c177aa40 <+96>:    jmp    0x5593c177aa24 <phase_5+68>
+
+
+0x00005646a49f7a42 <+98>:    call   0x5646a49f808c <explode_bomb>
+0x00005646a49f7a47 <+103>:   jmp    0x5646a49f7a11 <phase_5+49>
+
+
+0x00005646a49f7a49 <+105>:   cmp    $0xf,%edx
+edx = 15
+0x00005646a49f7a4c <+108>:   jne    0x5646a49f7a54 <phase_5+116> <explode_bomb>
+
+0x00005646a49f7a4e <+110>:   cmp    %ecx,0x4(%rsp)
+0x00005646a49f7a52 <+114>:   je     0x5646a49f7a59 <phase_5+121>
+0x00005646a49f7a54 <+116>:   call   0x5646a49f808c <explode_bomb>
+0x00005646a49f7a59 <+121>:   mov    0x8(%rsp),%rax
+0x00005646a49f7a5e <+126>:   xor    %fs:0x28,%rax
+0x00005646a49f7a67 <+135>:   jne    0x5646a49f7a6e <phase_5+142>
+0x00005646a49f7a69 <+137>:   add    $0x18,%rsp
+0x00005646a49f7a6d <+141>:   ret    
+0x00005646a49f7a6e <+142>:   call   0x5646a49f7290 <__stack_chk_fail@plt>
+
+
+
+

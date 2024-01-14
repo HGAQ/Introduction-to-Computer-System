@@ -1,0 +1,10 @@
+
+ass_3.o:     file format elf64-x86-64
+
+
+Disassembly of section .text:
+
+0000000000000000 <.text>:
+   0:	48 c7 c7 e8 2c 68 55 	mov    $0x55682ce8,%rdi
+   7:	68 9f 21 40 00       	push   $0x40219f
+   c:	c3                   	ret    
